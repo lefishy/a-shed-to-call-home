@@ -6,3 +6,9 @@ renderer.setSize(window.innerWidth,window.innerHeight);
 renderer.setClearColor(new THREE.Color("hsl("+clearHue+",55%,80%)"), 1);
 
 document.body.appendChild(renderer.domElement);
+
+function animate() {
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+}
+animate();
