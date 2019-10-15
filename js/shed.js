@@ -18,6 +18,13 @@ var ground = new THREE.Mesh(groundGeo, groundMat);
 
 shed.add(ground);
 
+var shedGeo = new THREE.BoxGeometry(7,7,7);
+var shedMat = new THREE.MeshBasicMaterial({color:0xf1f1f1});
+var shedMesh = new THREE.Mesh(shedGeo,shedMat);
+shedMesh.position.z = 3.5;
+
+shed.add(shedMesh);
+
 camera.position.z = 15;
 camera.position.y = -18;
 
