@@ -34,13 +34,38 @@ shed.add(shedMesh);
 var modelHeight = 64;
 var modelWidth = 32;
 var modelDepth = 32;
+
+var shedWidth = THREE.Math.randInt(8,24);
+if (shedWidth % 2 != 0) {
+	shedWidth += 1;
+}
+var shedXOffset = modelWidth - shedWidth;
+var shedXStart = shedXOffset / 2;
+var shedXEnd = shedXStart + shedWidth;
+var shedDepth = THREE.Math.randInt(8,24);
+if (shedDepth % 2 != 0) {
+	shedDepth += 1;
+}
+var shedYOffset = modelDepth - shedDepth;
+var shedYStart = shedYOffset / 2;
+var shedYEnd = shedYStart + shedDepth;
+
+console.log(shedWidth+":"+shedDepth);
+
 var model = new Array();
 for (var z = 0; z < modelHeight; z++) {
 	var yArr = new Array();
 	for (var y = 0; y < modelDepth; y++) {
 		var xArr = new Array();
 		for (var x = 0; x < modelWidth; x++) {
-			xArr.push(Math.random() > 0.3 ? false : true);
+			if ((x >= shedXStart && x <= shedXEnd && y >= shedYStart && y <= shedYEnd) && (x == shedXStart || x == shedXEnd || y == shedYStart || y == shedYEnd)
+		) {
+				xArr[x] = '#ff0000';
+			} else if(z == 0){
+				xArr[x] = '#ffffff';
+			}else {
+				xArr[x] = false;
+			}
 		}
 		yArr.push(xArr);
 	}
@@ -52,10 +77,11 @@ for(var z = 0; z < modelHeight; z++){
 	canvas.width = modelWidth;
 	canvas.height = modelDepth;
 	var context = canvas.getContext('2d');
-	context.fillStyle = '#ffffff';
+	context.imageSmoothingEnabled = false;
 	for (var y = 0; y < modelDepth; y++) {
 		for (var x = 0; x < modelWidth; x++) {
 			if (model[z][y][x]) {
+				context.fillStyle = model[z][y][x];
 				context.fillRect(x,y,1,1);
 			}
 		}
