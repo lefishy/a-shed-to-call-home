@@ -31,21 +31,41 @@ shed.add(shedMesh);
 */
 
 //New spritestacking shed generation!
+var modelHeight = 64;
+var modelWidth = 32;
+var modelDepth = 32;
+var model = new Array();
+for (var z = 0; z < modelHeight; z++) {
+	var yArr = new Array();
+	for (var y = 0; y < modelDepth; y++) {
+		var xArr = new Array();
+		for (var x = 0; x < modelWidth; x++) {
+			xArr.push(Math.random() > 0.3 ? false : true);
+		}
+		yArr.push(xArr);
+	}
+	model.push(yArr);
+}
 
-var numLayers = 32;
-
-for(var i = 0; i < numLayers; i++){
+for(var z = 0; z < modelHeight; z++){
 	var canvas = document.createElement('canvas');
-	canvas.width = 32;
-	canvas.height = 32;
+	canvas.width = modelWidth;
+	canvas.height = modelDepth;
 	var context = canvas.getContext('2d');
 	context.fillStyle = '#ffffff';
-	context.fillRect(4,4,24,24);
+	for (var y = 0; y < modelDepth; y++) {
+		for (var x = 0; x < modelWidth; x++) {
+			if (model[z][y][x]) {
+				context.fillRect(x,y,1,1);
+			}
+		}
+	}
 	var layerTex = new THREE.Texture(canvas);
-	var layerMat = new THREE.MeshBasicMaterial({map:layerTex,color:'0xffffff',side:THREE.DoubleSide});
+	layerTex.needsUpdate = true;
+	var layerMat = new THREE.MeshBasicMaterial({map:layerTex,transparent:true,opacity:1});
 	var layerPlane = new THREE.PlaneGeometry(8,8);
 	var layer = new THREE.Mesh(layerPlane,layerMat);
-	layer.position.z = i*0.2;
+	layer.position.z = z*0.1;
 	shed.add(layer);
 }
 
