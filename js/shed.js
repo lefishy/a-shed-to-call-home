@@ -12,6 +12,8 @@ var shed = new THREE.Group();
 
 scene.add(shed);
 
+/*old shed generation
+
 var groundGeo = new THREE.CircleGeometry(10,32);
 var groundMat = new THREE.MeshBasicMaterial({color:0x00ff00});
 var ground = new THREE.Mesh(groundGeo, groundMat);
@@ -25,12 +27,34 @@ shedMesh.position.z = 3.5;
 
 shed.add(shedMesh);
 
+*/
+
+//New spritestacking shed generation!
+
+var numLayers = 32;
+
+for(var i = 0; i < numLayers; i++){
+	var canvas = document.createElement('canvas');
+	canvas.width = 32;
+	canvas.height = 32;
+	var context = canvas.getContext('2d');
+	context.fillStyle = '#ffffff';
+	context.fillRect(4,4,24,24);
+	var layerTex = new THREE.Texture(canvas);
+	var layerMat = new THREE.MeshBasicMaterial({map:layerTex});
+	var layerPlane = new THREE.PlaneGeometry(8,8);
+	var layer = new THREE.Mesh(layerPlane,layerMat);
+	layer.position.z = i*0.2;
+	shed.add(layer);
+}
+
 camera.position.z = 15;
 camera.position.y = -18;
 
 camera.rotation.x = 1;
 
 function animate() {
+	shed.rotation.z += 0.02;
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
 }
