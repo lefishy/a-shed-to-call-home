@@ -1,5 +1,7 @@
 //Lets try to make our spritestack stuff more generic!
 function Stack(width = 64,depth = 64,height = 64){
+
+	//I dont know how js works properly so for now we need to use a property to create/access a three group!
 	this.group = new THREE.Group();
 	
 	this.add = function(thing){
@@ -34,8 +36,4 @@ function Stack(width = 64,depth = 64,height = 64){
 			this.group.add(layerObj);
 		}
 	}
-}
-
-function add(thing){
-	this.group.add(thing);
 }
