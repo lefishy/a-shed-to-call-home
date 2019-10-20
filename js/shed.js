@@ -9,9 +9,9 @@ renderer.setSize(window.innerWidth/2,window.innerHeight/2,false);
 
 document.body.appendChild(renderer.domElement);
 
-var shed = new THREE.Group();
+var shed = new Stack();
 
-scene.add(shed);
+scene.add(shed.group);
 
 /*old shed generation
 
@@ -105,7 +105,7 @@ camera.position.y = -18;
 camera.rotation.x = 1;
 
 function animate() {
-	shed.rotation.z += 0.02;
+	shed.group.rotation.z += 0.02;
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
 }
