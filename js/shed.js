@@ -9,7 +9,11 @@ renderer.setSize(window.innerWidth/2,window.innerHeight/2,false);
 
 document.body.appendChild(renderer.domElement);
 
-var shed = new Stack();
+var modelHeight = 64;
+var modelWidth = 32;
+var modelDepth = 32;
+
+var shed = new Stack(modelWidth, modelDepth, modelHeight);
 
 scene.add(shed.group);
 
@@ -31,9 +35,6 @@ shed.add(shedMesh);
 */
 
 //New spritestacking shed generation!
-var modelHeight = 64;
-var modelWidth = 32;
-var modelDepth = 32;
 
 var shedWidth = THREE.Math.randInt(8,24);
 if (shedWidth % 2 != 0) {
@@ -73,8 +74,12 @@ for (var z = 0; z < modelHeight; z++) {
 }
 
 for(var z = 0; z < modelHeight; z++){
-	shed.AddLayer(model[z]);
+	shed.SetLayer(model[z], z);
 }
+
+shed.UpdateAll();
+shed.SetVoxel(16,16,63,'#000000');
+shed.UpdateMesh(63);
 
 camera.position.z = 15;
 camera.position.y = -18;
