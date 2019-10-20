@@ -73,30 +73,7 @@ for (var z = 0; z < modelHeight; z++) {
 }
 
 for(var z = 0; z < modelHeight; z++){
-	var canvas = document.createElement('canvas');
-	canvas.width = modelWidth;
-	canvas.height = modelDepth;
-	var context = canvas.getContext('2d');
-	
-	for (var y = 0; y < modelDepth; y++) {
-		for (var x = 0; x < modelWidth; x++) {
-			if (model[z][y][x]) {
-				context.fillStyle = model[z][y][x];
-				context.fillRect(x,y,1,1);
-			}
-		}
-	}
-	var layerTex = new THREE.Texture(canvas);
-	layerTex.needsUpdate = true;
-	layerTex.minFilter = THREE.NearestFilter;
-	layerTex.magFilter = THREE.NearestFilter;
-	var layerMat = new THREE.MeshBasicMaterial({map:layerTex,transparent:true,opacity:1});
-	var layerPlane = new THREE.PlaneGeometry(8,8);
-	for (var i = 0; i < 3; i++) {
-		var layer = new 	THREE.Mesh(layerPlane,layerMat);
-		layer.position.z = z*0.1+(-0.05+(i*0.05));
-		shed.add(layer);
-	}
+	shed.AddLayer(model[z]);
 }
 
 camera.position.z = 15;
