@@ -53,24 +53,119 @@ var shedYEnd = shedYStart + shedDepth;
 
 console.log(shedWidth+":"+shedDepth);
 
+var lightBrown = '#bf520a';
+var darkBrown = '#632e0a';
+
+var shedHeight = THREE.Math.randInt(16,60);
+
+var startXStyle = THREE.Math.randInt(0,2);
+var endXStyle = THREE.Math.randInt(0,2);
+var startYStyle = THREE.Math.randInt(0,2);
+var endYStyle = THREE.Math.randInt(0,2);
+
 var model = new Array();
 for (var z = 0; z < modelHeight; z++) {
 	var yArr = new Array();
 	for (var y = 0; y < modelDepth; y++) {
 		var xArr = new Array();
-		for (var x = 0; x < modelWidth; x++) {
-			if ((x >= shedXStart && x <= shedXEnd && y >= shedYStart && y <= shedYEnd) && (x == shedXStart || x == shedXEnd || y == shedYStart || y == shedYEnd)
+		/*for (var x = 0; x < modelWidth; x++) {
+			if ((x >= shedXStart && x <= shedXEnd && y >= shedYStart && y <= shedYEnd) && (x == shedXStart || x == shedXEnd || y == shedYStart || y == shedYEnd) && z <= shedHeight
 		) {
-				xArr[x] = '#ff0000';
+				xArr[x] = lightBrown;
+				if(z % 5 == 0) {
+					xArr[x] = darkBrown;
+				}
 			} else if(z == 0){
 				xArr[x] = '#ffffff';
-			}else {
+			} else {
 				xArr[x] = false;
 			}
-		}
+		}*/
 		yArr.push(xArr);
 	}
 	model.push(yArr);
+}
+
+//build the walls!
+
+//shedXStart
+for(var z = 0; z <= shedHeight; z++)
+{
+	for(var y = shedYStart; y <=shedYEnd; y ++)
+	{
+		
+	}
+}
+
+//make doorrrr
+var side = THREE.Math.randInt(1,4);
+
+console.log(side);
+switch(side) {
+	case 1:
+		var doorWidth = THREE.Math.randInt(4,shedWidth - 2);
+		var doorHeight = THREE.Math.randInt(14, shedHeight - 2);
+		var doorX = THREE.Math.randInt(shedXStart+2,shedXEnd-doorWidth-2);
+		for(var x = doorX; x <= doorX + doorWidth; x ++)
+		{
+			for(var y = 1; y <= doorHeight; y++)
+			{
+				//console.log(x+":"+shedYStart+":"+y);
+				model[y][shedYStart][x] = null;
+				if(x == doorX || x == doorX + doorWidth || y == doorHeight) {
+					model[y][shedYStart][x] = lightBrown;
+				}
+			}
+		}
+	break;
+	case 2:
+		var doorWidth = THREE.Math.randInt(4,shedWidth - 2);
+		var doorHeight = THREE.Math.randInt(14, shedHeight - 2);
+		var doorX = THREE.Math.randInt(shedXStart+2,shedXEnd-doorWidth-2);
+		for(var x = doorX; x <= doorX + doorWidth; x ++)
+		{
+			for(var y = 1; y <= doorHeight; y++)
+			{
+				//console.log(x+":"+shedYStart+":"+y);
+				model[y][shedYEnd][x] = null;
+				if(x == doorX || x == doorX + doorWidth || y == doorHeight) {
+					model[y][shedYEnd][x] = lightBrown;
+				}
+			}
+		}
+	break;
+	case 3:
+		var doorWidth = THREE.Math.randInt(4,shedDepth - 2);
+		var doorHeight = THREE.Math.randInt(14, shedHeight - 2);
+		var doorY = THREE.Math.randInt(shedYStart+2,shedYEnd-doorWidth-2);
+		for(var x = doorY; x <= doorY + doorWidth; x ++)
+		{
+			for(var y = 1; y <= doorHeight; y++)
+			{
+				//console.log(x+":"+shedYStart+":"+y);
+				model[y][x][shedXStart] = null;
+				if(x == doorY || x == doorY + doorWidth || y == doorHeight) {
+					model[y][x][shedXStart] = lightBrown;
+				}
+			}
+		}
+	break;
+	case 4:
+		var doorWidth = THREE.Math.randInt(4,shedDepth - 2);
+		var doorHeight = THREE.Math.randInt(14, shedHeight - 2);
+		var doorY = THREE.Math.randInt(shedYStart+2,shedYEnd-doorWidth-2);
+		for(var x = doorY; x <= doorY + doorWidth; x ++)
+		{
+			for(var y = 1; y <= doorHeight; y++)
+			{
+				//console.log(x+":"+shedYStart+":"+y);
+				model[y][x][shedXEnd] = null;
+				if(x == doorY || x == doorY + doorWidth || y == doorHeight) {
+					model[y][x][shedXEnd] = lightBrown;
+				}
+			}
+		}
+	break;
 }
 
 for(var z = 0; z < modelHeight; z++){
@@ -78,8 +173,6 @@ for(var z = 0; z < modelHeight; z++){
 }
 
 shed.UpdateAll();
-shed.SetVoxel(16,16,63,'#000000');
-shed.UpdateMesh(63);
 
 camera.position.z = 15;
 camera.position.y = -18;
