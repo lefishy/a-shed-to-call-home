@@ -68,7 +68,7 @@ for (var z = 0; z < modelHeight; z++) {
 	var yArr = new Array();
 	for (var y = 0; y < modelDepth; y++) {
 		var xArr = new Array();
-		/*for (var x = 0; x < modelWidth; x++) {
+		for (var x = 0; x < modelWidth; x++) {
 			if ((x >= shedXStart && x <= shedXEnd && y >= shedYStart && y <= shedYEnd) && (x == shedXStart || x == shedXEnd || y == shedYStart || y == shedYEnd) && z <= shedHeight
 		) {
 				xArr[x] = lightBrown;
@@ -80,7 +80,7 @@ for (var z = 0; z < modelHeight; z++) {
 			} else {
 				xArr[x] = false;
 			}
-		}*/
+		}
 		yArr.push(xArr);
 	}
 	model.push(yArr);
@@ -89,13 +89,13 @@ for (var z = 0; z < modelHeight; z++) {
 //build the walls!
 
 //shedXStart
-for(var z = 0; z <= shedHeight; z++)
+/*for(var z = 0; z <= shedHeight; z++)
 {
 	for(var y = shedYStart; y <=shedYEnd; y ++)
 	{
 		
 	}
-}
+}*/
 
 //make doorrrr
 var side = THREE.Math.randInt(1,4);
